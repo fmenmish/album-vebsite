@@ -1,0 +1,502 @@
+/* General Reset and Typography */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  /* background-color: #000; */
+  background: linear-gradient(
+              rgba(0,0,0,0.8), /* Top overlay color */
+              rgba(0,0,0,0.8)  /* Bottom overlay color */
+            ),
+            url('../images/bg2.png');
+  color: #000;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  padding-bottom: 60px;
+}
+
+/* Links */
+a {
+  color: #ff3c3c;
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+}
+
+h1 {
+  text-align: center;
+}
+
+/* Content Wrapper */
+.container {
+  width: 900px;
+  margin: 0 auto; /* centers it horizontally */
+  padding: 20px;
+}
+
+/* Hero Banner */
+.hero {
+  width: 1000px;
+  height: 350px;
+  margin: 0 auto; /* keeps it centered */
+  background: url('../images/hero.png') center/cover no-repeat;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  border: 2px solid #161616;
+  box-shadow: 0 0 20px #111;
+}
+
+
+.hero-text h1 {
+  font-size: 3em;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.hero-text p {
+  font-size: 1.2em;
+  color: #bbb;
+  margin-top: 10px;
+}
+
+/* Introduction */
+.intro {
+  padding: 40px 20px;
+  text-align: center;
+  background-color: rgba(0,0,0,0.3);
+  color: #bbb;
+  font-size: 1.2em;
+  border-top: 2px solid #222;
+  border-bottom: 2px solid #222;
+}
+
+/* Catalog and Album Cards */
+.catalog {
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.row {
+  display: flex;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.album-card {
+  background-color: rgba(16,16,16,0.5);
+  border: 1px solid #161616;
+  box-shadow: 0 0 10px #111;
+  padding: 15px;
+  width: 30%; /* ensures 3 per row */
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  text-align: center;
+}
+
+.album-card:hover {
+  transform: scale(1.03);
+  box-shadow: 0 0 15px #ff3c3c;
+}
+.album-card img {
+  width: 100%;
+  height: auto;
+  border-bottom: 2px solid #222;
+  margin-bottom: 10px;
+}
+.album-card h3 {
+  color: #fff;
+  margin: 10px 0 5px;
+  font-size: 1.1em;
+}
+.album-card p {
+  color: #aaa;
+  margin: 5px 0;
+}
+.album-card button,
+.carousel-item button,
+.carousel-item-recommend-1 button,
+.login-box button,
+.login-home-button {
+  background-color: #ff3c3c;
+  color: white;
+  border: none;
+  padding: 10px 15px;
+  margin-top: 10px;
+  cursor: pointer;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+}
+
+.login-home-button,
+.top-nav .home-button {
+  border-radius: 4px;
+  margin-bottom: 20px;
+  margin: 5px 5px;
+}
+
+.login-home-button {
+  margin-bottom: 40px !important;
+}
+
+.login-home-button:hover,
+.top-nav .home-button:hover {
+  transform: scale(1.1);
+}
+
+.album-card button:hover {
+  background-color: #cc0000;
+  transform: scale(1.05);
+}
+
+/* Album Detail Page */
+#album-page {
+  max-width: 800px;
+  margin: 50px auto;
+  padding: 30px;
+  background-color: #111;
+  border: 1px solid #333;
+  box-shadow: 0 0 20px #111;
+  text-align: center;
+}
+#album-page img {
+  width: 300px;
+  margin-bottom: 20px;
+}
+#album-page h1 {
+  color: #fff;
+  font-size: 2em;
+  margin-bottom: 10px;
+}
+#album-page p {
+  color: #ccc;
+  margin: 5px 0;
+  font-size: 1.1em;
+}
+
+/* Category List */
+ul {
+  list-style-type: none;
+  padding: 40px;
+  display: flex;
+  justify-content: center;
+  gap: 30px;
+}
+ul li {
+  font-size: 1.3em;
+  text-transform: uppercase;
+}
+
+/* Footer */
+footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #111;
+  color: #666;
+  text-align: center;
+  padding: 10px 0;
+  border-top: 1px solid #222;
+  font-size: 0.9em;
+}
+
+/* Category-specific hero banners */
+.rock-hero {
+  background: url('../images/hero_rock.png') center/cover no-repeat;
+}
+.metal-hero {
+  background: url('../images/hero_metal.png') center/cover no-repeat;
+}
+.punk-hero {
+  background: url('../images/hero_punk.png') center/cover no-repeat;
+}
+.metalcore-hero {
+  background: url('../images/hero_metalcore.png') center/cover no-repeat;
+}
+.bands-hero {
+  background: url('../images/hero_bands.png') center/cover no-repeat;
+}
+.categories-hero {
+  background: url('../images/hero_categories.png') center/cover no-repeat;
+}
+
+/* Top Navigation */
+.top-nav {
+  /* background-color: #111; */
+  padding: 10px 20px;
+  width: 900px;
+  margin: 20px auto 20px;
+  text-align: center;
+}
+
+.home-button {
+  display: inline-block;
+  /* background-color: #ff3c3c; */
+  color: white;
+  padding: 8px 15px;
+  text-decoration: none;
+  text-transform: uppercase;
+  font-weight: bold;
+  letter-spacing: 1px;
+  /* border-radius: 4px; */
+  transition: background 0.3s ease;
+}
+
+.home-button:hover {
+  /* background-color: #cc0000; */
+  transform: scale(1.05);
+  text-decoration: none;
+}
+
+/* Related Albums Carousel */
+#related-section-same-genre,
+#related-section-recommend-1 {
+  width: 1100px;
+  margin: 50px auto 0;
+  padding: 20px;
+  background-color: #111;
+  border: 1px solid #333;
+  box-shadow: 0 0 15px #111;
+}
+
+#related-section-same-genre h2,
+#related-section-recommend-1 h2 {
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.carousel-container-same-genre,
+.carousel-container-recommend-1 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.carousel,
+.carousel-recommend-1 {
+  display: flex;
+  overflow: hidden;
+  width: 950px; /* same width as your container */
+}
+
+.carousel-track,
+.carousel-track-recommend-1 {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.carousel-item,
+.carousel-item-recommend-1 {
+  flex: 0 0 300px; /* 3 items fit in 900px */
+  margin: 0 10px;
+  background-color: #222;
+  border: 1px solid #333;
+  box-shadow: 0 0 10px #000;
+  text-align: center;
+  padding: 10px;
+  color: #fff;
+}
+
+.carousel-item img,
+.carousel-item-recommend-1 img {
+  width: 100%;
+  height: auto;
+  margin-bottom: 10px;
+}
+
+.carousel-btn {
+  background: none;
+  border: none;
+  color: #ff3c3c;
+  font-size: 2em;
+  cursor: pointer;
+  padding: 10px;
+  transition: color 0.3s ease;
+}
+.carousel-btn:hover {
+  color: #cc0000;
+}
+
+/* Login Button */
+#nav-right {
+  float: right;
+  margin-right: 20px;
+  margin-top: 5px;
+}
+
+.login-button {
+  background: #ff3c3c;
+  padding: 6px 12px;
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  font-weight: bold;
+}
+
+.login-button:hover {
+  background: #cc0000;
+  transform: scale(1.03) !important;
+}
+
+
+/* Add To Favorite Button */
+.favorite-button {
+  background: #900; /* darker red than normal buttons */
+  border: none;
+  color: #fff;
+  padding: 10px 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.favorite-button:hover {
+  background: #ff3c3c;
+  transform: scale(1.05);
+}
+
+.favorite-button.added {
+  background: #333;
+  color: #ff3c3c;
+  border: 1px solid #ff3c3c;
+}
+
+/* Add to Cart Button */
+.cart-button {
+  background: #444;
+  padding: 8px 14px;
+  color: #fff;
+  font-weight: bold;
+  text-transform: uppercase;
+  border-radius: 4px;
+  margin-left: 8px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.cart-button:hover {
+  background: #ff3c3c;
+  transform: scale(1.05);
+}
+
+.cart-button.in-cart {
+  background: #222;
+  border: 1px solid #ff3c3c;
+  color: #ff3c3c;
+}
+
+
+/* Cart Page */
+.user-controls {
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  gap: 15px;
+  align-items: center;
+  font-size: 0.9em;
+}
+
+.user-controls a {
+  background: #444;
+  padding: 6px 12px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: #fff;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.user-controls a:hover {
+  background: #ff3c3c;
+}
+
+.logged-in {
+  color: #0f0;
+  font-weight: bold;
+}
+
+.cart-link {
+  background: #900;
+}
+
+.cart-link:hover {
+  background: #cc0000;
+}
+
+/* Checkout Button */
+.checkout-button {
+  background: #ff3c3c;
+  color: #fff;
+  font-size: 1.2em;
+  font-weight: bold;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.checkout-button:hover {
+  background: #cc0000;
+  transform: scale(1.05);
+}
+
+#band-list {
+  background-color: rgba(16,16,16,0.5);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr); /* 3 equal columns */
+  gap: 1rem; /* space between items */
+  list-style: none; /* optional: remove bullets */
+  padding: 0;
+  margin: 0;
+}
+
+#band-list li {
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+#band-list li a {
+  display: block;
+  padding: 1rem;
+  height: 100%;
+  width: 100%;
+  text-decoration: none;
+}
+
+#band-list li a:hover {
+  color: #ff3c3c;
+  transform: scale(1.05);
+}
+
+/* Logout button */
+.logout-button {
+  background: #444;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 4px;
+  color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+  background: #ff3c3c;
+}
