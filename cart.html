@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Shopping Cart</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <style>
+    body {
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 50px auto;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 30px;
+      text-transform: uppercase;
+    }
+
+    .cart-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .cart-item {
+      display: flex;
+      align-items: center;
+      background: #111;
+      border: 1px solid #333;
+      padding: 15px;
+      border-radius: 6px;
+      box-shadow: 0 0 10px #900;
+    }
+
+    .cart-item img {
+      width: 100px;
+      height: 100px;
+      object-fit: cover;
+      margin-right: 20px;
+      border: 2px solid #333;
+    }
+
+    .cart-item-info {
+      flex-grow: 1;
+    }
+
+    .cart-item-info h3 {
+      margin: 0;
+      font-size: 1.2em;
+      color: #fff;
+    }
+
+    .cart-item-info p {
+      margin: 4px 0;
+      color: #bbb;
+    }
+
+    .remove-button {
+      background: #900;
+      padding: 8px 14px;
+      color: #fff;
+      font-weight: bold;
+      text-transform: uppercase;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+
+    .remove-button:hover {
+      background: #cc0000;
+    }
+
+    .total {
+      margin-top: 30px;
+      text-align: right;
+      font-size: 1.5em;
+      color: #ff3c3c;
+    }
+
+    .empty-message {
+      text-align: center;
+      font-size: 1.2em;
+      color: #bbb;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <a href="index.html" class="home-button">Home</a>
+    <h1>Your Cart</h1>
+    <div id="cart" class="cart-list"></div>
+    <div id="total" class="total"></div>
+    <div id="checkout-container" style="text-align: right; margin-top: 20px;"></div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    // --- Cookie helpers ---
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+      return null;
+    }
+
+    function setCookie(name, value) {
+      document.cookie = `${name}=${encodeURIComponent(value)}; path=/`;
+    }
+
+    function getCart() {
+      const cart = getCookie('cart');
+      return cart ? cart.split(',').filter(x => x) : [];
+    }
+    function saveCart(cart) {
+      setCookie('cart', cart.join(','));
+    }
+
+    const cartContainer = document.getElementById('cart');
+    const totalContainer = document.getElementById('total');
+    let total_global = 0;
+
+    function renderCart() {
+      const cart = getCart();
+      cartContainer.innerHTML = '';
+      totalContainer.textContent = '';
+
+      if (cart.length === 0) {
+        cartContainer.innerHTML = '<p class="empty-message">🛒 Your cart is empty.</p>';
+        return;
+      }
+
+      let total = 0;
+
+      cart.forEach(id => {
+        const album = albums.find(a => a.id === id);
+        if (!album) return;
+
+        total += parseFloat(album.price);
+
+        const item = document.createElement('div');
+        item.classList.add('cart-item');
+        item.setAttribute('data-id', album.id);
+        item.innerHTML = `
+          <img src="${album.cover}" alt="${album.name}">
+          <div class="cart-item-info">
+            <h3>${album.name}</h3>
+            <p>${album.band}</p>
+            <p class="item-price">$ ${album.price}</p>
+          </div>
+          <button class="remove-button" data-id="${album.id}">Remove</button>
+        `;
+
+        cartContainer.appendChild(item);
+      });
+
+      totalContainer.textContent = 'Total: $' + total.toFixed(2);
+      let total_global = total;
+
+      document.querySelectorAll('.remove-button').forEach(btn => {
+        btn.addEventListener('click', () => {
+          const id = btn.getAttribute('data-id');
+          let cart = getCart();
+          cart = cart.filter(item => item !== id);
+          saveCart(cart);
+          renderCart();
+        });
+      });
+
+      const checkoutContainer = document.getElementById('checkout-container');
+      checkoutContainer.innerHTML = ""; // Clear old buttons
+
+      const checkoutBtn = document.createElement('button');
+      checkoutBtn.textContent = "💳 Checkout";
+      checkoutBtn.classList.add('checkout-button');
+      checkoutBtn.id = "checkoutBtn";
+      checkoutBtn.addEventListener('click', () => {
+        const cartItems = getCart().map(id => albums.find(a => a.id === id));
+        console.log("🛒 Checkout items:");
+        cartItems.forEach(item => {
+          console.log(`${item.band} - ${item.name} ($${item.price})`);
+        });
+        console.log("Total: $" + total.toFixed(2));
+        window.location.reload()
+      });
+
+      checkoutContainer.appendChild(checkoutBtn);
+    }
+
+    renderCart();
+  </script>
+  <script type="text/javascript" src="//cdn.evgnet.com/beacon/i5568l55556pfu3vc3n3n3v091557685/fm_dev/scripts/evergage.min.js"></script>
+</body>
+
+</html>

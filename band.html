@@ -1,0 +1,76 @@
+<!-- band.html -->
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Band Albums</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/session.js"></script>
+  <script src="assets/js/cart.js"></script>
+  <script type="text/javascript" src="//cdn.evgnet.com/beacon/i5568l55556pfu3vc3n3n3v091557685/fm_dev/scripts/evergage.min.js"></script>
+</head>
+
+<body>
+  <header class="hero" style="background:url('assets/images/hero_band_albums.jpg') center/cover no-repeat;">
+    <div class="hero-text">
+      <h1 id="band-title"></h1>
+      <p>All albums from this band</p>
+    </div>
+  </header>
+
+  <nav class="top-nav">
+    <a href="index.html" class="home-button">Home</a>
+    <a href="bands.html" class="home-button">Bands</a>
+    <div id="nav-right"></div>
+    <div id="user-controls" class="user-controls"></div>
+  </nav>
+
+  <div class="container">
+    <div class="catalog" id="catalog"></div>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    const urlParams = new URLSearchParams(window.location.search);
+    const bandName = urlParams.get('name');
+    document.getElementById('band-title').textContent = bandName;
+
+    const catalog = document.getElementById('catalog');
+    const filtered = albums.filter(a => a.band === bandName);
+
+    filtered.forEach((a, i) => {
+      if (i % 3 === 0) {
+        const row = document.createElement('div');
+        row.className = 'row';
+        catalog.appendChild(row);
+      }
+
+      const card = document.createElement('div');
+      document.title = a.band + " - Band";
+      card.className = 'album-card';
+      card.innerHTML = `
+        <img src="${a.cover}" alt="${a.name}">
+        <h3>${a.name}</h3>
+        <p>Released: ${a.releaseDate}</p>
+        <p>Category: <a href="category/${a.category}.html">${a.category}</a></p>
+        <p>Price: <span style="color:#ff3c3c;weight:bold;font-size:1.4em;">$${a.price}</span></p>
+        <a href="albums/${a.id}.html"><button>View Album</button></a>
+        <button class="cart-button" data-id="${a.id}">Add to Cart</button>
+      `;
+      catalog.lastChild.appendChild(card);
+    });
+
+    document.querySelectorAll('.cart-button').forEach(btn => {
+      const albumId = btn.getAttribute('data-id');
+      const cart = getCart();
+      if (cart.includes(albumId)) {
+        btn.textContent = "Remove from Cart";
+        btn.classList.add("in-cart");
+      }
+      btn.addEventListener('click', () => toggleCart(albumId, btn));
+    });
+  </script>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!-- bands.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Bands</title>
+  <link rel="stylesheet" href="assets/css/styles.css">
+  <script src="assets/js/session.js"></script>
+  <script type="text/javascript" src="//cdn.evgnet.com/beacon/i5568l55556pfu3vc3n3n3v091557685/fm_dev/scripts/evergage.min.js"></script>
+</head>
+<body>
+  <header class="hero bands-hero">
+    <div class="hero-text">
+      <h1>Bands</h1>
+      <p>Browse all bands and explore their albums</p>
+    </div>
+  </header>
+
+  <nav class="top-nav">
+    <a href="index.html" class="home-button">Home</a>
+    <a href="category.html" class="home-button">Categories</a>
+    <div id="nav-right"></div>
+    <div id="user-controls" class="user-controls"></div>
+  </nav>
+
+  <div class="container">
+    <ul id="band-list"></ul>
+  </div>
+
+  <script src="data.js"></script>
+  <script>
+    const bandList = document.getElementById('band-list');
+    const bands = [...new Set(albums.map(a => a.band))].sort();
+
+    bands.forEach(band => {
+      const li = document.createElement('li');
+      li.innerHTML = `<a href="band.html?name=${encodeURIComponent(band)}">${band}</a>`;
+      bandList.appendChild(li);
+    });
+  </script>
+</body>
+</html>
