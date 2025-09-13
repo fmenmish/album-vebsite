@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Rock - Genre</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script src="../assets/js/session.js"></script>
+  <script type="text/javascript" src="//cdn.evgnet.com/beacon/i5568l55556pfu3vc3n3n3v091557685/fm_dev/scripts/evergage.min.js"></script>
+</head>
+<body>
+  <header class="hero rock-hero">
+    <div class="hero-text">
+      <h1>Rock Albums</h1>
+      <p>Explore powerful rock albums of the 21st century</p>
+    </div>
+  </header>
+  <nav class="top-nav">
+    <a href="../index.html" class="home-button">Home</a>
+    <a href="../category.html" class="home-button">Categories</a>
+    <div id="nav-right"></div>
+  </nav>
+
+  <div class="container">
+    <div class="catalog" id="catalog"></div>
+  </div>
+
+  <script src="../data.js"></script>
+  <script>
+    const catalog = document.getElementById('catalog');
+    const filtered = albums.filter(a => a.category === 'rock');
+
+    filtered.forEach((a, i) => {
+      if (i % 3 === 0) {
+        const row = document.createElement('div');
+        row.className = 'row';
+        catalog.appendChild(row);
+      }
+
+      const card = document.createElement('div');
+      card.className = 'album-card';
+      card.innerHTML = `
+        <img src="../${a.cover}" alt="${a.name}">
+        <h3>${a.name}</h3>
+        <p>By: <a href="../band.html?name=${encodeURIComponent(a.band)}">${a.band}</a></p>
+        <p>Released: ${a.releaseDate}</p>
+        <p>Price: <span style="color:#ff3c3c;weight:bold;font-size:1.4em;">$${a.price}</span></p>
+        <a href="../albums/${a.id}.html"><button>View Album</button></a>
+        <button class="cart-button" data-id="${a.id}">Add to Cart</button>
+      `;
+      catalog.lastChild.appendChild(card);
+    });
+  </script>
+</body>
+</html>
