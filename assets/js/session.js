@@ -39,9 +39,14 @@ function renderUserControls() {
 
     document.getElementById("logoutBtn").addEventListener("click", logout);
   } else {
-    container.innerHTML = `
+    window.location.pathname === '/album-vebsite/' ? 
+     container.innerHTML = `
       <a href="login.html" class="login-button">🔑 Login</a>
-    `;
+    `
+    : container.innerHTML = `
+    <a href="../login.html" class="login-button">🔑 Login</a>
+  `
+    ;
   }
 }
 
