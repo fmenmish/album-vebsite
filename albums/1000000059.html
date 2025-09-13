@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Album</title>
+  <link rel="stylesheet" href="../assets/css/styles.css">
+  <script src="../assets/js/session.js"></script>
+  <script src="../assets/js/cart.js"></script>
+  <script type="text/javascript" src="//cdn.evgnet.com/beacon/i5568l55556pfu3vc3n3n3v091557685/fm_dev/scripts/evergage.min.js"></script>
+</head>
+
+<body>
+  <nav class="top-nav">
+    <a href="../index.html" class="home-button">Home</a>
+    <a href="../category.html" class="home-button">Categories</a>
+    <div id="nav-right"></div>
+    <div id="user-controls" class="user-controls"></div>
+  </nav>
+  <div class="container">
+    <div id="album-page"></div>
+    <div id="genre-reccomend"></div>
+  </div>
+  <div id="related-section-same-genre">
+    <h2>Also in this category</h2>
+    <div class="carousel-container-same-genre">
+      <button class="carousel-btn prev">⟨</button>
+      <div class="carousel" id="carousel"></div>
+      <button class="carousel-btn next">⟩</button>
+    </div>
+  </div>
+
+  <!-- Personalization Reccomend Start -->
+   <!-- Use in Template -->
+  <div id="related-section-recommend-1">
+    <h2>User also Viewed</h2>
+    <div class="carousel-container-recommend-1">
+      <button class="carousel-btn prev-rec-1">⟨</button>
+      <div class="carousel-recommend-1" id="carousel-recommend-1"></div>
+      <button class="carousel-btn next-rec-1">⟩</button>
+    </div>
+  </div>
+  <!-- Personalization Reccomend End -->
+
+  <script src="../data.js"></script>
+  <script>
+    const url = new URL(window.location.href);
+    const id = url.pathname.split('/').pop().replace('.html', '');
+    const album = albums.find(x => x.id === id);
+
+    const albumPage = document.getElementById('album-page');
+
+    if (!album) {
+      albumPage.innerHTML = '<p>Album not found</p>';
+    } else {
+      document.title = album.name + " - Album";
+      albumPage.setAttribute('data-id', album.id);
+      albumPage.innerHTML = `
+        <img class="album-cover" src="../${album.cover}" alt="${album.name}">
+        <h1>${album.name}</h1>
+        <p class="album-band"><a href="../band.html?name=${encodeURIComponent(album.band)}">${album.band}</a></p>
+        <p class="album-release">Released: ${album.releaseDate}</p>
+        <p class="album-category"><a href="../category/${album.category}.html">${album.category}</a></p>
+        <p>Price: $<span class="album-price" style="color:#ff3c3c;weight:bold;font-size:1.4em;">${album.price}</span></p>
+        <button id="favoriteBtn" class="favorite-button">Add to Favorites</button>
+        <button id="cartBtn" class="cart-button">Add to Cart</button>
+      `;
+    }
+
+    // Related Albums Carousel
+    const related = albums.filter(a => a.category === album.category && a.id !== album.id);
+    const carousel = document.getElementById('carousel');
+
+    const track = document.createElement('div');
+    track.className = 'carousel-track';
+
+    related.forEach(a => {
+      const item = document.createElement('div');
+      item.className = 'carousel-item';
+      item.innerHTML = `
+  <img src="../${a.cover}" alt="${a.name}">
+  <h1>${a.name}</h1>
+  <p>By: <a href="../band.html?name=${encodeURIComponent(a.band)}">${a.band}</a></p>
+  <p>Released: ${a.releaseDate}</p>
+  <p>Category: <a href="../category/${a.category}.html">${a.category}</a></p>
+  <a href="${a.id}.html"><button>View Album</button></a>
+`;
+      track.appendChild(item);
+    });
+
+    carousel.appendChild(track);
+
+    // Carousel functionality
+    let index = 0;
+    const itemsPerSlide = 3;
+    const totalSlides = Math.ceil(related.length / itemsPerSlide);
+
+    document.querySelector('.next').addEventListener('click', () => {
+      if (index < totalSlides - 1) {
+        index++;
+        track.style.transform = `translateX(-${index * 960}px)`; // 900px = 3 cards
+      }
+    });
+
+    document.querySelector('.prev').addEventListener('click', () => {
+      if (index > 0) {
+        index--;
+        track.style.transform = `translateX(-${index * 960}px)`;
+      }
+    });
+
+
+
+
+    // Related Albums Carousel
+    // const relatedRec = albums.filter(a => a.category === album.category && a.id !== album.id);
+    const relatedRec = albums
+          .filter(a => a.category === album.category && a.id !== album.id)
+          .sort((a, b) => parseFloat(b.price) - parseFloat(a.price));
+    const carouselRec = document.getElementById('carousel-recommend-1');
+
+    const trackRec = document.createElement('div');
+    trackRec.className = 'carousel-track-recommend-1';
+
+    relatedRec.forEach(a => {
+      const itemRec = document.createElement('div');
+      itemRec.className = 'carousel-item-recommend-1';
+      itemRec.innerHTML = `
+  <img src="../${a.cover}" alt="${a.name}">
+  <h1>${a.name}</h1>
+  <p>By: <a href="../band.html?name=${encodeURIComponent(a.band)}">${a.band}</a></p>
+  <p>Released: ${a.releaseDate}</p>
+  <p>Category: <a href="../category/${a.category}.html">${a.category}</a></p>
+  <p>Price: $<span class="album-price" style="color:#ff3c3c;weight:bold;font-size:1.4em;">${a.price}</span></p>
+  <a href="${a.id}.html"><button>View Album</button></a>
+`;
+      trackRec.appendChild(itemRec);
+    });
+
+    carouselRec.appendChild(trackRec);
+
+    // Carousel functionality
+    let indexRec = 0;
+    const itemsPerSlideRec = 3;
+    const totalSlidesRec = Math.ceil(relatedRec.length / itemsPerSlideRec);
+
+    document.querySelector('.next-rec-1').addEventListener('click', () => {
+      if (indexRec < totalSlidesRec - 1) {
+        indexRec++;
+        trackRec.style.transform = `translateX(-${indexRec * 960}px)`; // 900px = 3 cards
+      }
+    });
+
+    document.querySelector('.prev-rec-1').addEventListener('click', () => {
+      if (indexRec > 0) {
+        indexRec--;
+        trackRec.style.transform = `translateX(-${indexRec * 960}px)`;
+      }
+    });
+
+
+
+
+
+
+  </script>
+  <script>
+    // Cookie helpers
+    function setCookie(name, value) {
+      document.cookie = `${name}=${encodeURIComponent(value)}; path=/`;
+    }
+    function getCookie(name) {
+      const value = `; ${document.cookie}`;
+      const parts = value.split(`; ${name}=`);
+      if (parts.length === 2) return decodeURIComponent(parts.pop().split(';').shift());
+      return null;
+    }
+
+    function getFavorites() {
+      const favs = getCookie('favorites');
+      return favs ? JSON.parse(favs) : [];
+    }
+
+    function saveFavorites(favs) {
+      setCookie('favorites', JSON.stringify(favs));
+    }
+
+    const favBtn = document.getElementById('favoriteBtn');
+    let favorites = getFavorites();
+
+    if (favorites.includes(album.id)) {
+      favBtn.textContent = "Remove from Favorites";
+      favBtn.classList.add("added");
+    }
+
+    favBtn.addEventListener('click', () => {
+      favorites = getFavorites();
+      if (favorites.includes(album.id)) {
+        // Remove from favorites
+        favorites = favorites.filter(id => id !== album.id);
+        saveFavorites(favorites);
+        favBtn.textContent = "Add to Favorites";
+        favBtn.classList.remove("added");
+      } else {
+        // Add to favorites
+        favorites.push(album.id);
+        saveFavorites(favorites);
+        favBtn.textContent = "Remove from Favorites";
+        console.log("Added to Favorites")
+        favBtn.classList.add("added");
+      }
+    });
+
+    const cartBtn = document.getElementById('cartBtn');
+    const albumId = album.id;
+    const cart = getCart();
+
+    if (cart.includes(albumId)) {
+      cartBtn.textContent = "Remove from Cart";
+      cartBtn.classList.add("in-cart");
+    }
+
+    cartBtn.addEventListener('click', () => toggleCart(albumId, cartBtn));
+
+  </script>
+</body>
+
+</html>
