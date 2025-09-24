@@ -41,7 +41,7 @@ function renderUserControls() {
   } else {
     window.location.pathname === '/album-vebsite/' ? 
      container.innerHTML = `
-      <a href="login.html" class="login-button">🔑 Login</a>
+      <a href="/album-vebsite/login.html" class="login-button">🔑 Login</a>
     `
     : container.innerHTML = `
     <a href="../login.html" class="login-button">🔑 Login</a>
@@ -51,3 +51,4 @@ function renderUserControls() {
 }
 
 document.addEventListener('DOMContentLoaded', renderUserControls);
+
