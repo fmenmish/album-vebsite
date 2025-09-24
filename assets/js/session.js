@@ -39,7 +39,7 @@ function renderUserControls() {
 
     document.getElementById("logoutBtn").addEventListener("click", logout);
   } else {
-    window.location.pathname === '/album-vebsite/' ? 
+    window.location.pathname === '/album-vebsite/index.html' ? 
      container.innerHTML = `
       <a href="/album-vebsite/login.html" class="login-button">🔑 Login</a>
     `
@@ -51,4 +51,5 @@ function renderUserControls() {
 }
 
 document.addEventListener('DOMContentLoaded', renderUserControls);
+
 
