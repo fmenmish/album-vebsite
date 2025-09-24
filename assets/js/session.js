@@ -44,12 +44,13 @@ function renderUserControls() {
       <a href="/album-vebsite/login.html" class="login-button">🔑 Login</a>
     `
     : container.innerHTML = `
-    <a href="../login.html" class="login-button">🔑 Login</a>
+    <a href="../album-vebsite/login.html" class="login-button">🔑 Login</a>
   `
     ;
   }
 }
 
 document.addEventListener('DOMContentLoaded', renderUserControls);
+
 
 
